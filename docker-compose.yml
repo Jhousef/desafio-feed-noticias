@@ -53,17 +53,17 @@ services:
     networks:
       - laravel
   #iamge frontend
-  image_front:
-    build:
-      context: .
-      dockerfile: Dockerfile-front
-    restart: unless-stopped
-    working_dir: /app
-    volumes:
-      - ./frontend:/app
-      - /app/node_modules
-    ports:
-      - '3000:3000'
+  # image_front:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile-front
+  #   restart: unless-stopped
+  #   working_dir: /app
+  #   volumes:
+  #     - ./frontend:/app
+  #     - /app/node_modules
+  #   ports:
+  #     - '3000:3000'
 
   # redis
   redis:
