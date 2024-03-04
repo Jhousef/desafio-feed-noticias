@@ -1,87 +1,59 @@
-#Projeto Feed-Notícias
-Este é um guia passo a passo para configurar e executar o projeto Teste-Agenda localmente usando Docker.
+# Teste Maximize - Feed-Notícias
 
-Pré-requisitos
-Docker Desktop instalado e configurado na sua máquina.
-Git instalado na sua máquina.
-Instalação
-Clone o repositório do projeto Feed-Notícias do GitHub:
+![capa](doc/capa.jpg)
 
-### Passo a passo
+O desafio proposto é desenvolver a entrega de um feed de notícias para uma
+aplicação com o uso de API, utilizando ferramentas open-source.
 
-Clone Repositório
+### Pré-requisitos
 
-```sh
-git clone git@github.com:Jhousef/desafio-feed-noticias.git
-```
+- Docker
+- Git
+- Pacote Make
 
-Clone os Arquivos do Laravel
+## Instalação
+
+1. Clone o repositório do projeto Feed-Notícias do GitHub:
 
 ```sh
 git clone git@github.com:Jhousef/desafio-feed-noticias.git
+cd desafio-feed-noticias.git
 ```
 
-Copie os arquivos docker-compose.yml, Dockerfile e o diretório docker/ para o seu projeto
+2. Crie a rede docker que será utilizada pelo ambiente:
 
 ```sh
-cp -rf setup-docker-laravel/* app-laravel/
+docker network create laravel
 ```
+
+### No linux
+
+3. Utilizaremos o make para facilitar nossa vida, caso não tenha o make instalado faça:
 
 ```sh
-cd app-laravel/
+sudo apt install make
 ```
 
-Crie o Arquivo .env
+4. Agora iremos rodar o comando make para subir o ambiente:
 
 ```sh
-cp .env.example .env
+make start
 ```
 
-Atualize as variáveis de ambiente do arquivo .env
+5. Após aguardar a criação do ambiente nosso app estará disponível nos seguintes endereços:
 
-```dosini
-APP_NAME="Especializa Ti"
-APP_URL=http://localhost:8989
+- frontend: [localhost:3005](http://localhost:3005)
+- backend: [localhost:8000](http://localhost:8000)
 
-DB_CONNECTION=mysql
-DB_HOST=db
-DB_PORT=3306
-DB_DATABASE=laravel
-DB_USERNAME=root
-DB_PASSWORD=root
+### No Windows
 
-CACHE_DRIVER=redis
-QUEUE_CONNECTION=redis
-SESSION_DRIVER=redis
-
-REDIS_HOST=redis
-REDIS_PASSWORD=null
-REDIS_PORT=6379
-```
-
-Suba os containers do projeto
+No windows para subir o ambiente rode os seguintes comandos
 
 ```sh
-docker-compose up -d
+docker-compose up --build -d
+docker-compose exec -it app cp .env.example .env
+docker-compose exec -it app composer install
+docker-compose exec -it app php artisan migrate
+docker-compose exec -it app php artisan db:seed
+docker-compose exec -it app chmod 777 -R bootstrap/cache storage
 ```
-
-Acessar o container
-
-```sh
-docker-compose exec app bash
-```
-
-Instalar as dependências do projeto
-
-```sh
-composer install
-```
-
-Gerar a key do projeto Laravel
-
-```sh
-php artisan key:generate
-```
-
-Acessar o projeto
-[http://localhost:8989](http://localhost:8989)

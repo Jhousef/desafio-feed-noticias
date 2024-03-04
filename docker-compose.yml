@@ -41,8 +41,8 @@ services:
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD:-root}
       MYSQL_PASSWORD: ${DB_PASSWORD:-userpass}
       MYSQL_USER: ${DB_USERNAME:-username}
-    volumes:
-      - ./backend/.docker/mysql/dbdata:/var/lib/mysql
+    # volumes:
+    #   - ./backend/.docker/mysql/dbdata:/var/lib/mysql
     ports:
       - '3308:3306'
     networks:
@@ -57,7 +57,7 @@ services:
       - ./frontend:/app
       - /app/node_modules
     ports:
-      - '3000:3000'
+      - '3005:5173'
 
 networks:
   laravel:
