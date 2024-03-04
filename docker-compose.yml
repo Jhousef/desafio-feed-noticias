@@ -4,10 +4,10 @@ services:
   # image project
   app:
     build:
-      context: .
+      context: ./backend
       dockerfile: Dockerfile
       args:
-        - user=carlos
+        - user=jhousef
         - uid=1000
         - NODE_VERSION=14
         - NPM_VERSION=7
@@ -29,7 +29,7 @@ services:
     image: nginx:alpine
     restart: unless-stopped
     ports:
-      - '8989:80'
+      - '8000:80'
     volumes:
       - ./backend:/var/www
       - ./backend/docker/nginx/:/etc/nginx/conf.d/
@@ -53,17 +53,17 @@ services:
     networks:
       - laravel
   #iamge frontend
-  # image_front:
-  #   build:
-  #     context: .
-  #     dockerfile: Dockerfile-front
-  #   restart: unless-stopped
-  #   working_dir: /app
-  #   volumes:
-  #     - ./frontend:/app
-  #     - /app/node_modules
-  #   ports:
-  #     - '3000:3000'
+  image_front:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile-front
+    restart: unless-stopped
+    working_dir: /app
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    ports:
+      - '3000:3000'
 
   # redis
   redis:
