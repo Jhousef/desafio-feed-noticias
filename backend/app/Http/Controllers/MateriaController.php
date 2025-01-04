@@ -23,7 +23,7 @@ class MateriaController extends Controller
     public function show($id)
     {
         $materia = $this->model->find($id);
-        
+
         if(!$materia) {
             return response()->json(['error' => 'matéria nã encontrada'], 404);
         }
@@ -89,6 +89,6 @@ class MateriaController extends Controller
         }
 
         $materia->delete();
-        return response()->json([null, 204]);
+        return response()->json(null, 204);
     }
 }
